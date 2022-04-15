@@ -9,14 +9,18 @@ function Provider({ children }) {
   };
 
   useEffect(() => {
-    const getPlanets = async () => {
-      const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+    try {
+      const getPlanets = async () => {
+        const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-      const { results } = await fetch(endpoint).then((response) => response.json());
-      setPlanetList(results);
-    };
-    getPlanets();
-  });
+        const { results } = await fetch(url).then((response) => response.json());
+        setPlanetList(results);
+      };
+      getPlanets();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   return (
     <PlanetsContext.Provider value={ contextValue }>
@@ -26,7 +30,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
