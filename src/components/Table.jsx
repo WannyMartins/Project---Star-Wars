@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from 'react';
-
-const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+import React, { useContext } from 'react';
+import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const [planetList, setPlanetList] = useState([]);
-
-  useEffect(() => {
-    const getPlanets = async () => {
-      const { results } = await fetch(endpoint).then((response) => response.json());
-      setPlanetList(results);
-    };
-    getPlanets();
-  });
+  const { planetList } = useContext(PlanetsContext);
 
   return (
     <table>
@@ -70,6 +61,7 @@ function Table() {
             <td>{item.terrain}</td>
             <td>{item.surface_water}</td>
             <td>{item.population}</td>
+            <td>{item.films}</td>
             <td>{item.created}</td>
             <td>{item.edited}</td>
             <td>{item.url}</td>
