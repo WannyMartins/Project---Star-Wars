@@ -1,25 +1,30 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import FilterNameComponent from './FilterNameComponent';
+import FilterNumbersComponent from './FilterNumbersComponent';
+import Filters from './Filters';
 
 function Table() {
-  const { planetList } = useContext(PlanetsContext);
-  const [valueInput, setValueInput] = useState('');
-
-  const filterByName = ({ target }) => {
-    setValueInput(target.value);
-  };
-
+  const {
+    // planetList,
+    filterByName,
+    // valueInput,
+    clicked,
+    // filterNumberList,
+  } = useContext(PlanetsContext);
   return (
     <div>
       <label htmlFor="filterNamePlanets">
         <input
-          type="text"
+          type="search"
+          placeholder="Search..."
           name="filterNamePlanets"
           id="filterNamePlanets"
           data-testid="name-filter"
           onChange={ filterByName }
         />
       </label>
+      <Filters />
       <table>
         <thead>
           <tr>
@@ -64,27 +69,9 @@ function Table() {
             </th>
           </tr>
         </thead>
-        {planetList.filter((item) => item.name.includes(valueInput))
-          .map((item, index) => (
-            <tbody key={ index }>
-              <tr>
-                <td>{item.name}</td>
-                <td>{item.rotation_period}</td>
-                <td>{item.orbital_period}</td>
-                <td>{item.diameter}</td>
-                <td>{item.climate}</td>
-                <td>{item.gravity}</td>
-                <td>{item.terrain}</td>
-                <td>{item.surface_water}</td>
-                <td>{item.population}</td>
-                <td>{item.films}</td>
-                <td>{item.created}</td>
-                <td>{item.edited}</td>
-                <td>{item.url}</td>
-              </tr>
-            </tbody>
-          ))}
-
+        <tbody>
+          { clicked ? <FilterNumbersComponent /> : <FilterNameComponent />}
+        </tbody>
       </table>
     </div>
   );
