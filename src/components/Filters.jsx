@@ -4,7 +4,6 @@ import PlanetsContext from '../context/PlanetsContext';
 function Filters() {
   const {
     onchange,
-    filterByNumbers,
     coluna,
     valor,
     operador,
@@ -14,25 +13,24 @@ function Filters() {
     setClicked,
     setFilterByNumericValues,
     filterByNumericValues,
-    planetList,
-    filterNumberList,
+    multFilters,
+    setColunasFiltradas,
+    colunasFiltradas,
   } = useContext(PlanetsContext);
-
-  function multFilters() {
-    if (filterByNumericValues.length === 0) {
-      return filterByNumbers(planetList);
-    } if (filterByNumericValues.length > 0) {
-      return filterByNumbers(filterNumberList);
-    }
-  }
 
   function onclick() {
     setClicked(true);
     multFilters();
-
     setFilterByNumericValues([...filterByNumericValues,
       { coluna, operador, valor }]);
+    setColunasFiltradas([...colunasFiltradas, coluna]);
   }
+
+  const arrayColuna = ['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
 
   return (
     <form>
@@ -45,11 +43,15 @@ function Filters() {
           value={ coluna }
           onChange={ (event) => onchange(event, setColuna) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {colunasFiltradas.length === 0
+            ? (
+              arrayColuna.map((element) => (
+                <option key={ element } value={ element }>{element}</option>
+              )))
+            : arrayColuna.filter((item) => !colunasFiltradas.includes(item))
+              .map((element) => (
+                <option key={ element } value={ element }>{element}</option>
+              ))}
         </select>
       </label>
       <label htmlFor="operador">

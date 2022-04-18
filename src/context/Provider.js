@@ -12,6 +12,8 @@ function Provider({ children }) {
   const [filterNumberList, setFilterNumberList] = useState(planetList);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
   const [saveFilterList, setSaveFilterList] = useState([]);
+  const [colunasFiltradas, setColunasFiltradas] = useState([]);
+
   useEffect(() => {
     try {
       const getPlanets = async () => {
@@ -49,6 +51,15 @@ function Provider({ children }) {
       return filterNumberList;
     }
   };
+
+  function multFilters() {
+    if (filterByNumericValues.length === 0) {
+      return filterByNumbers(planetList);
+    } if (filterByNumericValues.length > 0) {
+      return filterByNumbers(filterNumberList);
+    }
+  }
+
   const onchange = (e, set) => {
     set(e.target.value);
   };
@@ -72,6 +83,9 @@ function Provider({ children }) {
     setFilterByNumericValues,
     saveFilterList,
     setSaveFilterList,
+    multFilters,
+    setColunasFiltradas,
+    colunasFiltradas,
   };
 
   return (
