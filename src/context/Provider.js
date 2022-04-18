@@ -10,7 +10,8 @@ function Provider({ children }) {
   const [valor, setValor] = useState(0);
   const [clicked, setClicked] = useState(false);
   const [filterNumberList, setFilterNumberList] = useState(planetList);
-
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [saveFilterList, setSaveFilterList] = useState([]);
   useEffect(() => {
     try {
       const getPlanets = async () => {
@@ -29,46 +30,24 @@ function Provider({ children }) {
     setValueInput(target.value);
   };
 
-  const filterByNumbers = () => {
+  const filterByNumbers = (planets) => {
     if (operador === 'maior que') {
-      const maiorQ = planetList.filter((item) => (item[coluna] > Number(valor)));
+      const maiorQ = planets.filter((item) => (item[coluna] > Number(valor)));
       setFilterNumberList(maiorQ);
       return filterNumberList;
     }
     if (operador === 'menor que') {
-      const menorQ = planetList.filter((item) => (item[coluna] < Number(valor)));
+      const menorQ = planets.filter((item) => (item[coluna] < Number(valor)));
       setFilterNumberList(menorQ);
 
       return filterNumberList;
     }
     if (operador === 'igual a') {
-      const igualA = planetList.filter((item) => (item[coluna] === valor));
+      const igualA = planets.filter((item) => (item[coluna] === valor));
       setFilterNumberList(igualA);
 
       return filterNumberList;
     }
-
-    // switch (operador) {
-    // case 'maior_que':
-    // { const maiorQ = planetList.filter((item) => (item[coluna] > valor));
-    //   setFilterNumberList(maiorQ);
-
-    //   return filterNumberList; }
-
-    // case 'menor_que':
-    // { const menorQ = planetList.filter((item) => (item[coluna] < valor));
-    //   setFilterNumberList(menorQ);
-
-    //   return filterNumberList;
-    // }
-    // case 'igual_a':
-    // { const igualA = planetList.filter((item) => (item[coluna] === valor));
-    //   setFilterNumberList(igualA);
-
-    //   return filterNumberList;
-    // }
-    // default: return <p>Parametro não Encontrado</p>;
-    // }
   };
   const onchange = (e, set) => {
     set(e.target.value);
@@ -89,6 +68,10 @@ function Provider({ children }) {
     clicked,
     setClicked,
     filterNumberList,
+    filterByNumericValues,
+    setFilterByNumericValues,
+    saveFilterList,
+    setSaveFilterList,
   };
 
   return (
@@ -97,7 +80,6 @@ function Provider({ children }) {
     </PlanetsContext.Provider>
   );
 }
-
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };

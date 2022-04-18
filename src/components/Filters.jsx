@@ -12,16 +12,26 @@ function Filters() {
     setOperador,
     setColuna,
     setClicked,
+    setFilterByNumericValues,
+    filterByNumericValues,
+    planetList,
+    filterNumberList,
   } = useContext(PlanetsContext);
+
+  function multFilters() {
+    if (filterByNumericValues.length === 0) {
+      return filterByNumbers(planetList);
+    } if (filterByNumericValues.length > 0) {
+      return filterByNumbers(filterNumberList);
+    }
+  }
 
   function onclick() {
     setClicked(true);
-    filterByNumbers();
-    return (
-      <p>
-        { coluna + operador + valor }
-      </p>
-    );
+    multFilters();
+
+    setFilterByNumericValues([...filterByNumericValues,
+      { coluna, operador, valor }]);
   }
 
   return (

@@ -3,6 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 import FilterNameComponent from './FilterNameComponent';
 import FilterNumbersComponent from './FilterNumbersComponent';
 import Filters from './Filters';
+import FiltersHead from './FiltersHead';
 
 function Table() {
   const {
@@ -25,6 +26,7 @@ function Table() {
         />
       </label>
       <Filters />
+      <FiltersHead />
       <table>
         <thead>
           <tr>
